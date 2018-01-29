@@ -1,0 +1,43 @@
+<div class="container">
+  <div class="row">
+    <table class="table bordered-table">
+      <thead>
+        <th></th>
+        <th>Product Name</th>
+        <th>Quantity</th>
+        <th>Price(Rs)</th>
+        <th>Subtotal(Rs)</th>
+        <th></th>
+      </thead>
+      <tbody>
+        <% @carts.each do |cart|
+          product = Product.find_by(:name => cart.product_name)
+          @total += cart.total
+        %>
+        <tr>
+          <td><%= image_tag(product.img_name, width:"100px", height:"100px") %></td>
+          <td><%= cart.product_name %></td>
+          <td><%= cart.quantity %></td>
+          <td><%= cart.price %></td>
+          <td><%= cart.total %></td>
+          <td>
+            <%= form_tag :url => { :controller => :carts, :action => :update } do %>
+            <!-- if you write ':id' in the '_tag', rails automatically understand the value, so you don't need write ':value' -->
+              <%= hidden_field_tag :id, cart.id %>
+              <%= label_tag :quantity %>
+              <%= select_tag :quantity, options_for_select(1..50, :selected => cart.quantity), :include_blank => false, style:"display:inline;" %>
+              <%= submit_tag 'Change', class: "btn btn-success" %>
+            <% end %>
+            <%= link_to 'Delete', cart, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-warning", style:"margin-top:10px; margin-left:50px;" %>
+          </td>
+        </tr>
+        <% end %>
+        <tr>
+          <td colspan="4"></td>
+          <td> <span style="font-weight:bold;">total : Rs </span> <%= @total %> </td>
+          <td><%= link_to 'Proceed to Check', new_order_path, class: "btn btn-primary", style:"color:white;" %></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

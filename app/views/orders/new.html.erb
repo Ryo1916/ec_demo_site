@@ -1,0 +1,109 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <h3>Enter your info</h3>
+    </div>
+  </div>
+  <div class="row">
+    <%= form_for @order, :url => { :controller => :orders, :action => :create } do |order| %>
+      <div class="col-md-6 form-group">
+        <div class="field">
+          <%= order.label :username %>
+          <%= order.text_field :username, value: @user.username, class: "form-control" %>
+        </div>
+        <div class="field">
+          <%= order.label :email %>
+          <%= order.text_field :email, value: @user.email, class: "form-control" %>
+        </div>
+        <div class="field">
+          <%= order.label :phone %>
+          <%= order.telephone_field :phone, value: @user.phone, class: "form-control" %>
+        </div>
+        <div class="field">
+          <%= order.label :address %>
+          <%= order.text_field :address, class: "form-control" %>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="field">
+          <%= order.label :delivery %>
+          <%= order.radio_button :delivery, 'home', :checked => true %> Home
+          <%= order.radio_button :delivery, 'office' %> Office
+          <%= order.radio_button :delivery, 'convienience store' %> Convienience store
+        </div>
+        <div class="field">
+          <%= order.label :payment %>
+          <%= order.radio_button :payment, 'card', :checked => true %> Card
+          <%= order.radio_button :payment, 'cash on delivery' %> Cash on delivery
+          <%= order.radio_button :payment, 'bank transfer' %> Bank transfer
+          <%= order.radio_button :payment, 'convienience store' %> Convienience store
+        </div>
+      <div class="field">
+        <%= order.label :gift %>
+        <%= order.radio_button :gift, 'gift wrapping', :checked => true %> Gift Wrapping
+        <%= order.radio_button :gift, 'no wrapping' %> No Wrapping
+      </div>
+    </div>
+  </div>
+
+    <table class="table bordered-table">
+      <thead>
+        <th></th>
+        <th>product name</th>
+        <th>quantity</th>
+        <th>price</th>
+        <th>subtotal</th>
+      </thead>
+      <tbody>
+        <% @carts.each do |cart|
+          product = Product.find_by(:name => cart.product_name)
+          @total = @total + cart.total
+        %>
+        <tr>
+          <td><%= image_tag(product.img_name, width:"100px", height:"100px") %></td>
+          <td><%= cart.product_name %></td>
+          <td><%= cart.quantity %></td>
+          <td><%= cart.price %></td>
+          <td><%= cart.total %></td>
+        </tr>
+        <% end %>
+        <tr>
+          <td colspan="4"></td>
+          <td><span style="font-weight: bold;">
+             total : <span id="total"> <%= @total %> </span>
+          </span></td>
+        </tr>
+        <tr>
+          <td colspan="3"></td>
+          <td>
+            <div class="field">
+              <%= link_to "Back to Cart", carts_show_path, class: "btn btn-warning btn-block", style: "color:white;" %>
+            </div>
+          </td>
+          <td>
+            <div class="filed">
+              <%= order.submit "Check", data: { confirm: 'Are you sure?' }, class: "btn btn-primary btn-block" %>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  <% end %>
+
+    <!-- <div class="col-md-6">
+      <ul style="text-align: center;">
+        <li style="float: left;">
+          <span class="glyphicon glyphicon-shopping-cart" aria-hidden="false"></span> <br>
+          "Enter your info"
+        </li>
+        <li style="float: left;">
+          <span class="glyphicon glyphicon-shopping-cart"></span> <br>
+          "Check"
+        </li>
+        <li style="float: left;">
+          <span class="glyphicon glyphicon-shopping-cart"></span> <br>
+          "Complete"
+        </li>
+      </ul>
+    </div> -->
+  </div>

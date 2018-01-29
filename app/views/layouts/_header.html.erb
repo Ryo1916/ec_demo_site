@@ -1,0 +1,147 @@
+<nav class="navbar header" role="navigation">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-navbar-collapse">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar" style="color:balck;"></span>
+        <span class="icon-bar" style="color:balck;"></span>
+        <span class="icon-bar" style="color:balck;"></span>
+      </button>
+      <div class="navbar-brand navbar-brand-centered">
+        <%= link_to image_tag("logo.png"), root_path, class: "logo-image", style: "background-color:white; cursor:pointer;" %>
+      </div>
+    </div>
+  </div>
+
+  <div class="collapse navbar-collapse" id="bs-navbar-collapse">
+    <div class="row header-menu">
+      <ul class="nav navbar-nav navbar-left">
+        <li>
+          <a href="/" id="header-all">
+            <span class="glyphicon glyphicon-home" aria-hidden="false"></span> <br>
+            HOME
+          </a>
+        </li>
+        <li>
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" id="nav_item" aria-haspopup="true" aria-expanded="false">
+            <span class="glyphicon glyphicon-search" aria-hidden="false"></span> <br>
+            ITEM
+          </a>
+          <ul class="dropdown-menu">
+            <% Cat.all.each do |cat| %>
+            <li class="category-menu" id="<%= cat.category_name %>"> <%= cat.category_name %> </li>
+            <% end %>
+          </ul>
+        </li>
+      </ul>
+      <ul class="visible-xs">
+        <li>
+          <a href="/">HOME</a>
+        </li>
+        <li>
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" id="nav_item" aria-haspopup="true" aria-expanded="false">
+            ITEM
+          </a>
+        </li>
+      </ul>
+
+    <!-- <div class="col-md-4 logo">
+      <%= link_to image_tag("logo.png"), root_path, class: "logo-image navbar-brand" %>
+    </div> -->
+      <ul class="nav navbar-nav navbar-right">
+        <!-- login button and register button display or not -->
+        <% if session[:username].blank? %>
+          <li>
+            <div class="btn btn-default" id="login-button">
+              <span class="glyphicon glyphicon-user" aria-hidden="false"></span> <br>
+              <span style="font-family: fantasy;">LOGIN</span>
+            </div>
+          </li>
+          <li>
+            <div class="btn btn-default" id="register-button">
+              <span class="glyphicon glyphicon-info-sign" aria-hidden="false"></span> <br>
+              <span style="font-family: fantasy;">REGISTER</span>
+            </div>
+          </li>
+          <li>
+            <div class="">
+              <a href="/login">
+                <div class="btn btn-default">
+                  <span class="glyphicon glyphicon-shopping-cart" style="pointer-events: none; text-decoration: none;" aria-hidden="false"></span> <br>
+                  <span style="font-family: fantasy; pointer-events: none;">CART</span>
+                  <span style="font-family: fantasy;"> 0 </span>
+                </div>
+              </a>
+            </div>
+          </li>
+          <% else %>
+          <li>
+            <div class="">
+              <a href="/users/<%=session[:uid]%>" style="text-decoration: none;">
+                <div class="btn btn-default">
+                  <%= image_tag(session[:image], width: "40px", height: "40px", style: "pointer-events:none;") %> <br>
+                  <span style="font-family: fantasy;"><%= session[:username] %></span>
+                </div>
+              </a>
+            </div>
+          </li>
+          <li>
+            <div class="">
+              <a href="/logout" style="text-decoration: none;">
+                <div class="btn btn-default">
+                  <span class="glyphicon glyphicon-user" aria-hidden="false"></span> <br>
+                  <span style="font-family: fantasy;">LOGOUT</span>
+                </div>
+              </a>
+            </div>
+          </li>
+          <li>
+            <div class="">
+              <a href="/carts/show">
+                <div class="btn btn-default">
+                  <span class="glyphicon glyphicon-shopping-cart" style="pointer-events: none; text-decoration: none;" aria-hidden="false"></span> <br>
+                  <span style="font-family: fantasy; pointer-events: none;">CART</span>
+                  <span style="font-family: fantasy; pointer-events: none;">
+                    <%= Cart.where(:user_id => session[:uid]).all.count %>
+                  </span>
+                </div>
+              </a>
+            </div>
+          </li>
+        <% end %>
+      </ul>
+      <ul class="visible-xs">
+        <% if session[:username].blank? %>
+          <li><a href="/login">LOGIN</a></li>
+          <li><a href="/users/new"></a>REGISTER</li>
+          <li><a href="/login"></a>CART</li>
+        <% else %>
+          <li>
+            <a href="/users/<%=session[:uid]%>">GO TO <%= session[:username] %> PAGE</a>
+          </li>
+          <li><a href="/logout">LOGOUT</a></li>
+          <li>
+            <a href="/carts/show">CART</a><%= Cart.where(:user_id => session[:uid]).all.count %>
+          </li>
+        <% end %>
+      </ul>
+
+    </div>
+  </div>
+
+  <% if flash[:notice] %>
+    <div class="flash">
+      <%= flash[:notice] %>
+    </div>
+  <% end %>
+
+</nav>
+
+  <div id="modal-overlay"></div>
+  <%= render partial: 'layouts/login-form' %>
+
+  <% if session[:uid].blank? %>
+    <%= render partial: 'layouts/register-form' %>
+  <% end %>
+
+</div>

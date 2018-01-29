@@ -1,0 +1,40 @@
+<div class="container" id="login-modal">
+  <div class="row">
+    <div class="col-md-12">
+      <h3>WELCOME</h3>
+      <div class="buttons">
+        <ul>
+          <li><div class="btn btn-default btn-facebook">
+            <span class="fa fa-facebook"></span>
+            Facebook
+          </div></li>
+          <li><div class="btn btn-default btn-twitter">
+            <span class="fa fa-twitter"></span>
+            Twitter
+          </div></li>
+          <li><div class="btn btn-default btn-google">
+            <span class="fa fa-google"></span>
+            Google
+          </div></li>
+        </ul>
+      </div>
+
+      <hr>
+
+      <h3>LOGIN</h3>
+      <div class="form-group">
+        <%= form_tag({ :controller => :sessions, :action => :create }) do %>
+          <%= label_tag :username %>
+          <!-- User Name <br> -->
+          <%= text_field_tag :username, params[:username], placeholder: "Enter username", class: "form-control" %> <br>
+          <!-- Password <br> -->
+          <%= label_tag :password %>
+          <%= password_field_tag :password, params[:password], placeholder: "Enter password", class: "form-control" %> <br>
+          <%= submit_tag "Submit", class: "btn btn-warning btn-block" %> <br>
+          Not member? <br>
+          <div id="create-btn" class="btn btn-primary btn-block">Create your Account</div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
