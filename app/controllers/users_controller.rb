@@ -28,7 +28,7 @@ class UsersController < ApplicationController
     # end
     if @user.save
       flash[:notice] = "Created your account !"
-      redirect_to :action => "new"
+      redirect_to login_path
     else
       render("/users/new")
     end
@@ -36,12 +36,12 @@ class UsersController < ApplicationController
 
   def update
     @user = User.find(params[:id])
-    @user.username = params[:username]
-    @user.password = params[:password]
-    @user.email = params[:email]
-    @user.phone = params[:phone]
-    @user.image = params[:image]
-    if @user.save
+    # @user.username = params[:username]
+    # @user.password = params[:password]
+    # @user.email = params[:email]
+    # @user.phone = params[:phone]
+    # @user.image = params[:image]
+    if @user.save(user_params)
       session[:username] = @user.username
       session[:password] = @user.password_digest
       session[:image] = @user.image.url
@@ -61,6 +61,6 @@ class UsersController < ApplicationController
 
   private
     def user_params
-      params.require(:user).permit(:username, :email, :password, :phone, :gender, :date_of_birth, :image)
+      params.require(:user).permit(:username, :email, :password, :password_confirmation, :phone, :gender, :date_of_birth, :image)
     end
 end

@@ -21,11 +21,28 @@ class SessionsController < ApplicationController
     end
   end
 
+  def omniauth_create
+    auth = request.env["omniauth.auth"]
+    session[:omniauth] = auth.except('extra')
+    user = User.sign_in_from_omniauth(auth)
+    if !user.blank?
+      session[:uid] = user.id
+      session[:username] = user.username
+      session[:email] = auth.info.email
+      session[:image] = auth.info.image
+      flash[:notice] = "login successful !"
+      redirect_to controller: "products", action: "index"
+    else
+      render action: "new"
+    end
+  end
+
   def destroy
     session.delete(:uid)
     session.delete(:username)
     session.delete(:password)
     session.delete(:image)
+    session.delete(:omniauth)
     flash[:notice] = "logout successful."
     redirect_to root_path
   end

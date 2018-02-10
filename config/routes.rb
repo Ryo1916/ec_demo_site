@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   resources :products
   resources :cats
   resources :users
-  post "users/:id/edit" => "users#update"
+  post "users/:id" => "users#update"
   resources :carts
   post "carts/show" => "carts#update"
   get "orders/complete" => "orders#show"
@@ -13,6 +13,7 @@ Rails.application.routes.draw do
 
   get "logout", to: "sessions#destroy"
 
+  get 'auth/:provider/callback', to: "sessions#omniauth_create"
   controller :sessions do
     get "login" => :new
     post "login" => :create

@@ -138,10 +138,10 @@
 </nav>
 
   <div id="modal-overlay"></div>
-  <%= render partial: 'layouts/login-form' %>
+  <%= render partial: 'layouts/login_modal' %>
 
   <% if session[:uid].blank? %>
-    <%= render partial: 'layouts/register-form' %>
+    <%= render partial: 'layouts/register_modal' %>
   <% end %>
 
 </div>

@@ -40,6 +40,13 @@ gem 'bcrypt', git: 'https://github.com/codahale/bcrypt-ruby.git', :require => 'b
 # Use font awesome
 gem 'font-awesome-rails'
 
+# omniauth by facebook
+gem 'omniauth-facebook'
+#  omniauth by twitter
+gem 'omniauth-twitter'
+#  omniauth by google
+gem 'omniauth-google-oauth2'
+
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
