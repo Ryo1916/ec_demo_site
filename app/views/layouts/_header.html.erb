@@ -86,18 +86,20 @@
             </div>
           </li>
           <li>
-            <div class="">
-              <a href="/logout" style="text-decoration: none;">
-                <div class="btn btn-default">
-                  <span class="glyphicon glyphicon-user" aria-hidden="false"></span> <br>
-                  <span style="font-family: fantasy;">LOGOUT</span>
-                </div>
-              </a>
-            </div>
+              <!-- <a href="/logout" style="text-decoration: none;"> -->
+              <div class="">
+                <%= link_to logout_path do %>
+                  <div class="btn btn-default">
+                    <span class="glyphicon glyphicon-user" aria-hidden="false"></span> <br>
+                    <span style="font-family: fantasy;">LOGOUT</span>
+                  </div>
+                <% end %>
+              </div>
+              <!-- </a> -->
           </li>
           <li>
             <div class="">
-              <a href="/carts/show">
+              <%= link_to carts_path do %>
                 <div class="btn btn-default">
                   <span class="glyphicon glyphicon-shopping-cart" style="pointer-events: none; text-decoration: none;" aria-hidden="false"></span> <br>
                   <span style="font-family: fantasy; pointer-events: none;">CART</span>
@@ -105,7 +107,7 @@
                     <%= Cart.where(:user_id => session[:uid]).all.count %>
                   </span>
                 </div>
-              </a>
+              <% end %>
             </div>
           </li>
         <% end %>

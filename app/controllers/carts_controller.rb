@@ -4,18 +4,20 @@ class CartsController < ApplicationController
   end
 
   def show
-    # @cart = Cart.find(params[:id])
-    # @cart = Cart.where(:user_id => session[:uid]).order("id desc").first
+    @product = Product.find(@cart.product_id)
+    @cart = Cart.where(:user_id => session[:uid]).order("id desc").first
+    # above line is equal to the below line.
+    # @cart = Cart.where(:user_id => session[:uid]).last
+
+  # If use product name, it's not unique id, so it cannot use as a display the product image.
+  # When you use product name as a reference, you cannot display the image because of duplication of the product name.
     # names = @cart.product_name
     # @product = Product.find_by(:name => names)
-
-    @carts = Cart.where(:user_id => session[:uid]).order("id desc")
-    @total = 0
   end
 
   def index
     @carts = Cart.where(:user_id => session[:uid]).all
-
+    @total = 0
     # @images = []
     # @carts.each do |cart|
     #   names = cart.product_name
@@ -25,7 +27,6 @@ class CartsController < ApplicationController
   end
 
   def create
-    # @product_id = 0
     @cart = Cart.new(carts_params)
 
     if session[:username].blank?
@@ -60,6 +61,6 @@ class CartsController < ApplicationController
   end
 
   def carts_params
-    params.require(:cart).permit(:user_id, :product_name, :price, :quantity, :total)
+    params.require(:cart).permit(:user_id, :product_id, :product_name, :price, :quantity, :total)
   end
 end
