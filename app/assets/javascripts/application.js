@@ -69,7 +69,7 @@ $(document).ready(function(){
 
 
   $('.category-menu').click(function(){
-    // ajax fundtion needs one argument to pass the controller and to get data from database
+    // ajax function needs one argument to pass the controller and to get data from database
     ajax($(this).attr('id'));
   });
 

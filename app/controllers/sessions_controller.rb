@@ -8,11 +8,7 @@ class SessionsController < ApplicationController
   def create
     user = User.find_by(username: params[:username])
     if user and user.authenticate(params[:password])
-      # session[] is global variable.
-      session[:uid] = user.id
-      session[:username] = user.username
-      session[:password] = user.password_digest
-      session[:image] = user.image.url
+      log_in(user)
       flash[:notice] = "login successful !"
       redirect_to controller: "products", action: "index"
     else
@@ -38,11 +34,7 @@ class SessionsController < ApplicationController
   end
 
   def destroy
-    session.delete(:uid)
-    session.delete(:username)
-    session.delete(:password)
-    session.delete(:image)
-    session.delete(:omniauth)
+    log_out
     flash[:notice] = "logout successful."
     redirect_to root_path
   end

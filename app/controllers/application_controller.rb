@@ -7,6 +7,9 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   before_action :authorize
 
+  # this is to use SessionsHelper
+  include SessionsHelper
+
   # this is to check already login or not.
   def authorize
     unless User.find_by(username: session[:username])

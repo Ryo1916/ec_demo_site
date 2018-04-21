@@ -17,11 +17,13 @@ class OrdersController < ApplicationController
 
   def create
     @order = Order.new(order_params)
-    @carts = Cart.where(:user_id => session[:uid]).all
     @order.save
+    @carts = Cart.where(:user_id => session[:uid]).all
     @carts.each do |cart|
       cart.destroy
     end
+  # you can also use...
+    # Cart.where(user_id: session[:uid]).destroy_all
     redirect_to("/orders/complete")
   end
 
